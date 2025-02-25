@@ -1,8 +1,13 @@
 import { cn } from "@/utils/cn";
+import { Link } from "react-router-dom";
 
+interface NavItem {
+  name: string;
+  path: string;
+}
 interface MobileNavProps {
   isOpen: boolean;
-  navList: string[];
+  navList: NavItem[];
 }
 
 const MobileNav = ({ isOpen, navList }: MobileNavProps) => {
@@ -35,18 +40,21 @@ const MobileNav = ({ isOpen, navList }: MobileNavProps) => {
         )}
       >
         {navList.map((item) => (
-          <li
-            key={item}
-            className={cn(
-              "py-4 px-8",
-              "text-sm uppercase tracking-widest",
-              "cursor-pointer",
-              "hover:bg-zinc-100 hover:text-black transition-colors duration-300",
-              "flex items-center justify-center",
-              "font-medium"
-            )}
-          >
-            {item}
+          <li key={item.path}>
+            <Link
+              to={item.path}
+              className={cn(
+                "py-4 px-8",
+                "text-sm uppercase tracking-widest",
+                "cursor-pointer",
+                "hover:bg-zinc-100 hover:text-black transition-colors duration-300",
+                "flex items-center justify-center",
+                "font-medium",
+                "w-full"
+              )}
+            >
+              {item.name}
+            </Link>
           </li>
         ))}
       </ul>

@@ -24,7 +24,7 @@ function Footer() {
   };
 
   return (
-    <footer className="py-6 text-center bg-gray-50">
+    <footer className="py-6 text-center bg-white">
       <div className="container mx-auto">
         <p className="text-gray-600 mb-2">每一个今天都是成就明天的起点</p>
         <p className="text-sm text-gray-500">

@@ -5,9 +5,13 @@ import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
 import MenuButton from "./MenuButton";
 import Logo from "./Logo";
-
 function Header() {
-  const navList = ["Home", "Posts", "About"];
+  const navList = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Posts", path: "/posts" },
+  ];
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // 添加窗口大小变化监听
