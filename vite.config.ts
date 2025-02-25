@@ -15,4 +15,7 @@ export default defineConfig({
       "@utils": path.resolve(__dirname, "./src/utils"),
     },
   },
+  build: {
+    outDir: "gh-pages",
+  },
 });
