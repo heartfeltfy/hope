@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "@/layout";
 import { lazy, Suspense } from "react";
-const Home = lazy(() => import("@/pages/home"));
-const About = lazy(() => import("@/pages/about"));
+const Home = lazy(() => import("@/pages/Home"));
+const About = lazy(() => import("@/pages/About"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
 const router = createBrowserRouter([
