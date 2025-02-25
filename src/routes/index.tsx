@@ -28,7 +28,11 @@ const router = createBrowserRouter([
       },
       {
         path: "*",
-        element: <NotFound />,
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <NotFound />
+          </Suspense>
+        ),
       },
     ],
   },
