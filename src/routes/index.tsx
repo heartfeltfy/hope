@@ -6,37 +6,40 @@ const Home = lazy(() => import("@/pages/Home"));
 const About = lazy(() => import("@/pages/About"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    children: [
-      {
-        index: true,
-        element: (
-          <Suspense fallback={<div>Loading...</div>}>
-            <Home />
-          </Suspense>
-        ),
-      },
-      {
-        path: "about",
-        element: (
-          <Suspense fallback={<div>Loading...</div>}>
-            <About />
-          </Suspense>
-        ),
-      },
-    ],
-  },
-  {
-    path: "*",
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <NotFound />
-      </Suspense>
-    ),
-  },
-]);
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          index: true,
+          element: (
+            <Suspense fallback={<div>Loading...</div>}>
+              <Home />
+            </Suspense>
+          ),
+        },
+        {
+          path: "about",
+          element: (
+            <Suspense fallback={<div>Loading...</div>}>
+              <About />
+            </Suspense>
+          ),
+        },
+        {
+          path: "*",
+          element: (
+            <Suspense fallback={<div>Loading...</div>}>
+              <NotFound />
+            </Suspense>
+          ),
+        },
+      ],
+    },
+  ],
+  { basename: "/hope/" }
+);
 
 export default router;
