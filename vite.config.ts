@@ -2,11 +2,21 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
+import fs from "fs";
 
 // https://vite.dev/config/
 export default defineConfig({
   base: process.env.NODE_ENV === "production" ? "/hope/" : "./",
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    {
+      name: "copy-404",
+      closeBundle: async () => {
+        fs.copyFileSync("dist/index.html", "dist/404.html");
+      },
+    },
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -17,6 +27,6 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: "docs",
+    outDir: "dist",
   },
 });
