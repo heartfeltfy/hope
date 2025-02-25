@@ -1,11 +1,11 @@
-import { createBrowserRouter } from "react-router";
+import { createHashRouter } from "react-router";
 import Layout from "@/layout";
 import { lazy, Suspense } from "react";
 const Home = lazy(() => import("@/pages/home"));
 const About = lazy(() => import("@/pages/about"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <Layout />,
