@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { lazy, Suspense } from "react";
 
 import Layout from "@/layout";
+import Loading from "@/components/Loading";
 const Home = lazy(() => import("@/pages/Home"));
 const About = lazy(() => import("@/pages/About"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
@@ -15,7 +16,7 @@ const router = createBrowserRouter(
         {
           index: true,
           element: (
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<Loading />}>
               <Home />
             </Suspense>
           ),
@@ -23,7 +24,7 @@ const router = createBrowserRouter(
         {
           path: "about",
           element: (
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<Loading />}>
               <About />
             </Suspense>
           ),
@@ -31,7 +32,7 @@ const router = createBrowserRouter(
         {
           path: "*",
           element: (
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<Loading />}>
               <NotFound />
             </Suspense>
           ),
