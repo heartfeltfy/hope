@@ -16,8 +16,8 @@ const MobileNav = ({ isOpen, navList }: MobileNavProps) => {
       className={cn(
         "sm:hidden",
         "absolute left-0 right-0",
-        "w-full bg-white/95 backdrop-blur-sm",
-        "border-t border-gray-100",
+        "w-full bg-gradient-to-b from-blue-50/95 to-white/95 backdrop-blur-sm",
+        "border-t border-slate-200/70",
         "shadow-lg",
         "transition-all duration-300 ease-in-out",
         "z-40",
@@ -32,8 +32,8 @@ const MobileNav = ({ isOpen, navList }: MobileNavProps) => {
       <ul
         className={cn(
           "flex flex-col",
-          "divide-y divide-gray-100",
-          "text-gray-600",
+          "divide-y divide-slate-100",
+          "text-slate-600",
           "max-w-7xl mx-auto",
           "max-h-[calc(100vh-100%)]",
           "overflow-y-auto"
@@ -45,9 +45,9 @@ const MobileNav = ({ isOpen, navList }: MobileNavProps) => {
               to={item.path}
               className={cn(
                 "py-4 px-8",
-                "text-sm uppercase tracking-widest",
+                "text-sm uppercase tracking-wide",
                 "cursor-pointer",
-                "hover:bg-zinc-100 hover:text-black transition-colors duration-300",
+                "hover:bg-indigo-50/50 hover:text-indigo-600 transition-colors duration-300",
                 "flex items-center justify-center",
                 "font-medium",
                 "w-full"
