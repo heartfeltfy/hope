@@ -14,7 +14,8 @@ const inspirationalText = [
 const Home = observer(() => {
   const [isVisible, setIsVisible] = useState(false)
   const { counterStore } = useStores()
-  const { count, b, increment, doubleCount } = counterStore
+  const { increment, count } = counterStore
+  console.log(increment, count)
 
   useEffect(() => {
     // 页面加载后添加动画效果
@@ -30,13 +31,10 @@ const Home = observer(() => {
         )}
       >
         <h1 className="text-4xl md:text-5xl mb-8 font-bold text-center drop-shadow-lg bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
-          愿我所有的努力都不被辜负{b}
+          愿我所有的努力都不被辜负
         </h1>
 
-        <div
-          className="text-lg md:text-xl leading-loose text-center max-w-2xl px-4 space-y-2"
-          onClick={increment}
-        >
+        <div className="text-lg md:text-xl leading-loose text-center max-w-2xl px-4 space-y-2">
           {inspirationalText.map((line, index) => (
             <p
               key={index}
@@ -48,8 +46,6 @@ const Home = observer(() => {
               )}
             >
               {line}
-              {count}
-              {doubleCount}
             </p>
           ))}
         </div>
