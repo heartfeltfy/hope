@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { observer } from 'mobx-react-lite'
+import { useStores } from '@/stores'
 
 const inspirationalText = [
   '愿我在未来的日子里，',
@@ -9,8 +11,10 @@ const inspirationalText = [
   '所有的付出都能开花结果。',
 ]
 
-const Home = () => {
+const Home = observer(() => {
   const [isVisible, setIsVisible] = useState(false)
+  const { counterStore } = useStores()
+  const { count, b, increment, doubleCount } = counterStore
 
   useEffect(() => {
     // 页面加载后添加动画效果
@@ -26,10 +30,13 @@ const Home = () => {
         )}
       >
         <h1 className="text-4xl md:text-5xl mb-8 font-bold text-center drop-shadow-lg bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
-          愿我所有的努力都不被辜负
+          愿我所有的努力都不被辜负{b}
         </h1>
 
-        <div className="text-lg md:text-xl leading-loose text-center max-w-2xl px-4 space-y-2">
+        <div
+          className="text-lg md:text-xl leading-loose text-center max-w-2xl px-4 space-y-2"
+          onClick={increment}
+        >
           {inspirationalText.map((line, index) => (
             <p
               key={index}
@@ -41,12 +48,14 @@ const Home = () => {
               )}
             >
               {line}
+              {count}
+              {doubleCount}
             </p>
           ))}
         </div>
       </div>
     </div>
   )
-}
+})
 
 export default Home

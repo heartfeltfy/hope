@@ -53,7 +53,7 @@ export default tseslint.config(
       '@typescript-eslint/explicit-module-boundary-types': 'off',
 
       // 通用规则
-      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      'no-console': 'off',
       'no-debugger': 'warn',
       'no-duplicate-imports': 'error',
       'no-unused-vars': 'off', // 使用 TypeScript 的规则替代
