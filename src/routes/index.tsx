@@ -1,37 +1,44 @@
-import { createBrowserRouter } from "react-router";
-import Layout from "@/layout";
-import { lazy, Suspense } from "react";
-const Home = lazy(() => import("@/pages/home"));
-const About = lazy(() => import("@/pages/about"));
-const NotFound = lazy(() => import("@/pages/NotFound"));
+import { createBrowserRouter } from "react-router-dom";
+import { lazy } from "react";
 
-const router = createBrowserRouter([
+import Layout from "@/layout";
+import LazyLoad from "@/components/LazyLoad";
+
+// 懒加载页面组件
+const Home = lazy(() => import("@/pages/Home"));
+const About = lazy(() => import("@/pages/About"));
+const NotFound = lazy(() => import("@/pages/NotFound"));
+const Posts = lazy(() => import("@/pages/Posts"));
+
+// 路由配置
+const routes = [
   {
     path: "/",
     element: <Layout />,
     children: [
       {
         index: true,
-        element: (
-          <Suspense fallback={<div>Loading...</div>}>
-            <Home />
-          </Suspense>
-        ),
+        element: LazyLoad(<Home />),
       },
       {
         path: "about",
-        element: (
-          <Suspense fallback={<div>Loading...</div>}>
-            <About />
-          </Suspense>
-        ),
+        element: LazyLoad(<About />),
+      },
+      {
+        path: "posts",
+        element: LazyLoad(<Posts />),
       },
       {
         path: "*",
-        element: <NotFound />,
+        element: LazyLoad(<NotFound />),
       },
     ],
   },
-]);
+];
+
+// 创建路由实例
+const router = createBrowserRouter(routes, {
+  basename: process.env.NODE_ENV === "production" ? "/hope" : "/",
+});
 
 export default router;

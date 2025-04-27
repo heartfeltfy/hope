@@ -1,8 +1,13 @@
 import { cn } from "@/utils/cn";
+import { Link } from "react-router-dom";
 
+interface NavItem {
+  name: string;
+  path: string;
+}
 interface MobileNavProps {
   isOpen: boolean;
-  navList: string[];
+  navList: NavItem[];
 }
 
 const MobileNav = ({ isOpen, navList }: MobileNavProps) => {
@@ -11,8 +16,8 @@ const MobileNav = ({ isOpen, navList }: MobileNavProps) => {
       className={cn(
         "sm:hidden",
         "absolute left-0 right-0",
-        "w-full bg-white/95 backdrop-blur-sm",
-        "border-t border-gray-100",
+        "w-full bg-gradient-to-b from-blue-50/95 to-white/95 backdrop-blur-sm",
+        "border-t border-slate-200/70",
         "shadow-lg",
         "transition-all duration-300 ease-in-out",
         "z-40",
@@ -27,26 +32,29 @@ const MobileNav = ({ isOpen, navList }: MobileNavProps) => {
       <ul
         className={cn(
           "flex flex-col",
-          "divide-y divide-gray-100",
-          "text-gray-600",
+          "divide-y divide-slate-100",
+          "text-slate-600",
           "max-w-7xl mx-auto",
           "max-h-[calc(100vh-100%)]",
           "overflow-y-auto"
         )}
       >
         {navList.map((item) => (
-          <li
-            key={item}
-            className={cn(
-              "py-4 px-8",
-              "text-sm uppercase tracking-widest",
-              "cursor-pointer",
-              "hover:bg-zinc-100 hover:text-black transition-colors duration-300",
-              "flex items-center justify-center",
-              "font-medium"
-            )}
-          >
-            {item}
+          <li key={item.path}>
+            <Link
+              to={item.path}
+              className={cn(
+                "py-4 px-8",
+                "text-sm uppercase tracking-wide",
+                "cursor-pointer",
+                "hover:bg-indigo-50/50 hover:text-indigo-600 transition-colors duration-300",
+                "flex items-center justify-center",
+                "font-medium",
+                "w-full"
+              )}
+            >
+              {item.name}
+            </Link>
           </li>
         ))}
       </ul>

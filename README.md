@@ -1,50 +1,38 @@
-# React + TypeScript + Vite
+# Personal Blog Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 项目简介
 
-Currently, two official plugins are available:
+这是一个基于 React + TypeScript + Vite 构建的现代化个人博客系统，集成了生活记录、技术分享和 AI 智能问答等功能，旨在打造一个全方位的个人知识管理与分享平台。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 核心功能
 
-## Expanding the ESLint configuration
+- 📝 博客写作与管理 [❌]
+  - 分类与标签管理 [❌]
+  - 图片上传与管理 [❌]
+- 🎯 生活记录 [❌]
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+  - 日常随笔 [❌]
+  - 照片墙 [❌]
+  - 时间轴展示 [❌]
 
-- Configure the top-level `parserOptions` property like this:
+- 🤖 AI 智能问答 [❌]
+  - 集成大语言模型 [❌]
+  - 智能对话功能 [❌]
+  - 知识库检索 [❌]
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 技术栈
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- 前端框架：React 18 + TypeScript
+- 构建工具：Vite
+- UI 组件库：[待选择]
+- 状态管理：[待选择]
+- 后端技术：[待选择]
+- 数据库：[待选择]
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## 项目特点
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- 🚀 基于现代化技术栈，性能优异 [❌]
+- 💡 支持暗黑模式切换 [❌]
+- 📱 响应式设计，完美适配多端 [❌]
+- 🔍 SEO 优化 [❌]
+- 🔒 安全性保障 [❌]
