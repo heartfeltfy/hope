@@ -21,25 +21,25 @@ const authStore = makeAutoObservable({
 
   // 设置用户信息
   setUserInfo(userInfo: UserInfo | null) {
-    this.userInfo = userInfo
-    this.isLoggedIn = !!userInfo
+    authStore.userInfo = userInfo
+    authStore.isLoggedIn = !!userInfo
   },
 
   // 设置加载状态
   setLoading(loading: boolean) {
-    this.loading = loading
+    authStore.loading = loading
   },
 
   // 设置错误信息
   setError(error: string | null) {
-    this.error = error
+    authStore.error = error
   },
 
   // 登录
   async login(username: string, password: string) {
     try {
-      this.setLoading(true)
-      this.setError(null)
+      authStore.setLoading(true)
+      authStore.setError(null)
 
       // TODO: 这里替换为实际的登录 API 调用
       const response = await fetch('/api/login', {
@@ -55,35 +55,35 @@ const authStore = makeAutoObservable({
       }
 
       const userInfo = await response.json()
-      this.setUserInfo(userInfo)
+      authStore.setUserInfo(userInfo)
     } catch (error) {
-      this.setError(error instanceof Error ? error.message : '登录失败')
+      authStore.setError(error instanceof Error ? error.message : '登录失败')
       throw error
     } finally {
-      this.setLoading(false)
+      authStore.setLoading(false)
     }
   },
 
   // 登出
   logout() {
-    this.setUserInfo(null)
-    this.setError(null)
+    authStore.setUserInfo(null)
+    authStore.setError(null)
   },
 
   // 检查登录状态
   checkAuth() {
     // TODO: 这里可以添加 token 验证逻辑
-    return this.isLoggedIn
+    return authStore.isLoggedIn
   },
 
   // 获取用户信息
   getUserInfo() {
-    return this.userInfo
+    return authStore.userInfo
   },
 
   // 获取 token
   getToken() {
-    return this.userInfo?.token
+    return authStore.userInfo?.token
   },
 })
 
