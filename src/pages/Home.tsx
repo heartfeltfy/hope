@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { observer } from 'mobx-react-lite'
 import { useStores } from '@/stores'
@@ -11,6 +11,14 @@ const inspirationalText = [
   '所有的付出都能开花结果。',
 ]
 
+// 提取动画逻辑为一个工具函数
+const getAnimationClass = (isVisible: boolean, delay: number) =>
+  twMerge(
+    'transform transition-all duration-700 ease-out',
+    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0',
+    `delay-[${delay}ms]`
+  )
+
 const Home = observer(() => {
   const [isVisible, setIsVisible] = useState(false)
   const { counterStore } = useStores()
@@ -21,6 +29,17 @@ const Home = observer(() => {
     // 页面加载后添加动画效果
     setIsVisible(true)
   }, [])
+
+  // 缓存渲染的文本内容
+  const renderedText = useMemo(
+    () =>
+      inspirationalText.map((line, index) => (
+        <p key={index} className={getAnimationClass(isVisible, (index + 1) * 200)}>
+          {line}
+        </p>
+      )),
+    [isVisible]
+  )
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-slate-50 to-blue-100 text-slate-700 font-sans p-4">
@@ -35,19 +54,7 @@ const Home = observer(() => {
         </h1>
 
         <div className="text-lg md:text-xl leading-loose text-center max-w-2xl px-4 space-y-2">
-          {inspirationalText.map((line, index) => (
-            <p
-              key={index}
-              className={twMerge(
-                'transform transition-all duration-700 ease-out',
-                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0',
-                // 给每一行添加递增的延迟
-                `delay-[${(index + 1) * 200}ms]`
-              )}
-            >
-              {line}
-            </p>
-          ))}
+          {renderedText}
         </div>
       </div>
     </div>
