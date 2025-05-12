@@ -96,6 +96,7 @@ const authStore: AuthState = makeAutoObservable({
 
       // 输入验证
       if (!username || !password) {
+        // 此处可以提示错误信息
         throw new Error('用户名和密码不能为空')
       }
 
@@ -108,7 +109,7 @@ const authStore: AuthState = makeAutoObservable({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({username, password}),
+        body: JSON.stringify({ username, password }),
         signal: controller.signal,
       })
 
@@ -116,6 +117,7 @@ const authStore: AuthState = makeAutoObservable({
 
       if (!response.ok) {
         const errorData = await response.json()
+        // 此处提示错误信息
         throw new Error(errorData.message || '登录失败')
       }
 
@@ -127,6 +129,7 @@ const authStore: AuthState = makeAutoObservable({
       } else {
         authStore.setError('登录失败')
       }
+      // 此处可以提示错误信息
       throw error
     } finally {
       authStore.setLoading(false)
