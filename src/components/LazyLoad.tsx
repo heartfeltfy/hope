@@ -1,6 +1,13 @@
 import Loading from '@/components/Loading'
-import { ReactNode, Suspense } from 'react'
-// 通用的懒加载组件
-const LazyLoad = (Component: ReactNode) => <Suspense fallback={<Loading />}>{Component}</Suspense>
+import { ReactElement, Suspense } from 'react'
+
+interface LazyLoadProps {
+  element: ReactElement
+  fallback?: ReactElement
+}
+
+const LazyLoad = ({ element, fallback }: LazyLoadProps) => (
+  <Suspense fallback={fallback || <Loading />}>{element}</Suspense>
+)
 
 export default LazyLoad
