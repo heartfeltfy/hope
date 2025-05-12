@@ -25,15 +25,25 @@ interface AuthState {
 
   // 方法
   setUserInfo(userInfo: UserInfo | null): void
+
   setLoading(loading: boolean): void
+
   setError(error: AuthError | string | null): void
+
   login(username: string, password: string): Promise<void>
+
   logout(): void
+
   checkAuth(): boolean
+
   getUserInfo(): UserInfo | null
+
   getToken(): string | undefined
+
   checkTokenExpiration(): boolean
+
   startAutoLogoutTimer(timeout?: number): void
+
   reset(): void
 }
 
@@ -98,7 +108,7 @@ const authStore: AuthState = makeAutoObservable({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({username, password}),
         signal: controller.signal,
       })
 
@@ -184,12 +194,16 @@ const persistConfig = {
   storage: window.localStorage,
   version: 1,
   cleanup: () => {
-    const stored = localStorage.getItem('AuthStore')
-    if (stored) {
-      const data = JSON.parse(stored)
-      if (data.version !== persistConfig.version) {
-        localStorage.removeItem('AuthStore')
+    try {
+      const stored = localStorage.getItem('AuthStore')
+      if (stored) {
+        const data = JSON.parse(stored)
+        if (!data.version || data.version !== persistConfig.version) {
+          localStorage.removeItem('AuthStore')
+        }
       }
+    } catch {
+      localStorage.removeItem('AuthStore')
     }
   },
 }
