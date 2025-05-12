@@ -18,19 +18,19 @@ const routes = [
     children: [
       {
         index: true,
-        element: LazyLoad({ element: <Home /> }),
+        element: <LazyLoad element={<Home />} />,
       },
       {
         path: 'about',
-        element: LazyLoad({ element: <About /> }),
+        element: <LazyLoad element={<About />} />,
       },
       {
         path: 'posts',
-        element: LazyLoad({ element: <Posts /> }),
+        element: <LazyLoad element={<Posts />} />,
       },
       {
         path: '*',
-        element: LazyLoad({ element: <NotFound /> }),
+        element: <LazyLoad element={<NotFound />} />,
       },
     ],
   },
