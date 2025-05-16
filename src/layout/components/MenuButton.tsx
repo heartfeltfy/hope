@@ -13,6 +13,8 @@ const MenuButton = ({ isOpen, onClick, className }: MenuButtonProps) => {
         'block z-50 cursor-pointer p-2 rounded-md',
         'text-slate-600 hover:text-indigo-600',
         'hover:bg-indigo-50/60',
+        'dark:text-slate-200 dark:hover:text-indigo-400',
+        'dark:hover:bg-zinc-800/60',
         'transition-all duration-300',
         className
       )}

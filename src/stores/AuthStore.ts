@@ -25,15 +25,25 @@ interface AuthState {
 
   // 方法
   setUserInfo(userInfo: UserInfo | null): void
+
   setLoading(loading: boolean): void
+
   setError(error: AuthError | string | null): void
+
   login(username: string, password: string): Promise<void>
+
   logout(): void
+
   checkAuth(): boolean
+
   getUserInfo(): UserInfo | null
+
   getToken(): string | undefined
+
   checkTokenExpiration(): boolean
+
   startAutoLogoutTimer(timeout?: number): void
+
   reset(): void
 }
 
@@ -41,51 +51,52 @@ interface AuthState {
 let autoLogoutTimer: NodeJS.Timeout | null = null
 
 // 创建 store 实例
-const authStore: AuthState = makeAutoObservable({
+const authStore: AuthState = makeAutoObservable<AuthState>({
   // 用户信息
-  userInfo: null as UserInfo | null,
+  userInfo: null,
   // 是否已登录
   isLoggedIn: false,
   // 登录状态
   loading: false,
   // 错误信息
-  error: null as string | null,
+  error: null,
 
   // 设置用户信息
-  setUserInfo(userInfo: UserInfo | null) {
-    authStore.userInfo = userInfo
-    authStore.isLoggedIn = !!userInfo
+  setUserInfo(userInfo) {
+    this.userInfo = userInfo
+    this.isLoggedIn = !!userInfo
     if (userInfo) {
-      authStore.startAutoLogoutTimer()
+      this.startAutoLogoutTimer()
     } else if (autoLogoutTimer) {
       clearTimeout(autoLogoutTimer)
     }
   },
 
   // 设置加载状态
-  setLoading(loading: boolean) {
-    authStore.loading = loading
+  setLoading(loading) {
+    this.loading = loading
   },
 
   // 设置错误信息
-  setError(error: AuthError | string | null) {
+  setError(error) {
     if (typeof error === 'string') {
-      authStore.error = error
+      this.error = error
     } else if (error) {
-      authStore.error = error.message
+      this.error = error.message
     } else {
-      authStore.error = null
+      this.error = null
     }
   },
 
   // 登录
-  async login(username: string, password: string) {
+  async login(username, password) {
     try {
-      authStore.setLoading(true)
-      authStore.setError(null)
+      this.setLoading(true)
+      this.setError(null)
 
       // 输入验证
       if (!username || !password) {
+        // 此处可以提示错误信息
         throw new Error('用户名和密码不能为空')
       }
 
@@ -106,47 +117,49 @@ const authStore: AuthState = makeAutoObservable({
 
       if (!response.ok) {
         const errorData = await response.json()
+        // 此处提示错误信息
         throw new Error(errorData.message || '登录失败')
       }
 
       const userInfo = await response.json()
-      authStore.setUserInfo(userInfo)
+      this.setUserInfo(userInfo)
     } catch (error) {
       if (error instanceof Error) {
-        authStore.setError(error.message)
+        this.setError(error.message)
       } else {
-        authStore.setError('登录失败')
+        this.setError('登录失败')
       }
+      // 此处可以提示错误信息
       throw error
     } finally {
-      authStore.setLoading(false)
+      this.setLoading(false)
     }
   },
 
   // 登出
   logout() {
-    authStore.reset()
+    this.reset()
   },
 
   // 检查登录状态
   checkAuth() {
-    if (!authStore.isLoggedIn) return false
-    return authStore.checkTokenExpiration()
+    if (!this.isLoggedIn) return false
+    return this.checkTokenExpiration()
   },
 
   // 获取用户信息
   getUserInfo() {
-    return authStore.userInfo
+    return this.userInfo
   },
 
   // 获取 token
   getToken() {
-    return authStore.userInfo?.token
+    return this.userInfo?.token
   },
 
   // 检查 token 是否过期
   checkTokenExpiration() {
-    const token = authStore.getToken()
+    const token = this.getToken()
     if (!token) return false
 
     try {
@@ -161,16 +174,16 @@ const authStore: AuthState = makeAutoObservable({
   startAutoLogoutTimer(timeout: number = 30 * 60 * 1000) {
     if (autoLogoutTimer) clearTimeout(autoLogoutTimer)
     autoLogoutTimer = setTimeout(() => {
-      authStore.logout()
+      this.logout()
     }, timeout)
   },
 
   // 重置所有状态
   reset() {
-    authStore.userInfo = null
-    authStore.isLoggedIn = false
-    authStore.loading = false
-    authStore.error = null
+    this.userInfo = null
+    this.isLoggedIn = false
+    this.loading = false
+    this.error = null
     if (autoLogoutTimer) {
       clearTimeout(autoLogoutTimer)
     }
@@ -184,17 +197,21 @@ const persistConfig = {
   storage: window.localStorage,
   version: 1,
   cleanup: () => {
-    const stored = localStorage.getItem('AuthStore')
-    if (stored) {
-      const data = JSON.parse(stored)
-      if (data.version !== persistConfig.version) {
-        localStorage.removeItem('AuthStore')
+    try {
+      const stored = localStorage.getItem('AuthStore')
+      if (stored) {
+        const data = JSON.parse(stored)
+        if (!data.version || data.version !== persistConfig.version) {
+          localStorage.removeItem('AuthStore')
+        }
       }
+    } catch {
+      localStorage.removeItem('AuthStore')
     }
   },
 }
 
 // 配置持久化
-makePersistable(authStore, persistConfig)
+void makePersistable(authStore, persistConfig)
 
 export default authStore

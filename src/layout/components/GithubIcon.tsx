@@ -8,8 +8,9 @@ const GithubIcon = ({ url = 'https://github.com/heartfeltfy' }) => {
       rel="noopener noreferrer"
       className={cn(
         'text-slate-600 hover:text-indigo-600',
+        'dark:text-slate-200 dark:hover:text-indigo-400',
         'rounded-full p-2',
-        'hover:bg-indigo-50/60',
+        'hover:bg-indigo-50/60 dark:hover:bg-zinc-800/60',
         'transition-all duration-300',
         'flex items-center justify-center'
       )}

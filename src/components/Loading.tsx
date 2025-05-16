@@ -1,33 +1,14 @@
-import { CSSProperties } from 'react'
-
-const loadingStyles: CSSProperties = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  minHeight: '200px',
-}
-
-const spinnerStyles: CSSProperties = {
-  width: '50px',
-  height: '50px',
-  border: '3px solid #f3f3f3',
-  borderTop: '3px solid #3498db',
-  borderRadius: '50%',
-  animation: 'spin 1s linear infinite',
-}
-
 const Loading = () => {
   return (
-    <div style={loadingStyles}>
-      <style>
-        {`
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-        `}
-      </style>
-      <div style={spinnerStyles} />
+    <div className="fixed inset-0 z-50 flex justify-center items-center bg-white dark:bg-zinc-900 transition-colors duration-300">
+      <div
+        className="
+          w-[50px] h-[50px] rounded-full
+          border-4 border-slate-200 border-t-blue-400
+          dark:border-zinc-700 dark:border-t-blue-500
+          animate-spin
+        "
+      />
     </div>
   )
 }

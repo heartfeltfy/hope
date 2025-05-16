@@ -1,21 +1,28 @@
 import { makeAutoObservable } from 'mobx'
 import { makePersistable } from 'mobx-persist-store'
 
-const counterStore = makeAutoObservable({
+type CounterStoreType = {
+  count: number
+  b: number
+  increment: () => void
+  decrement: () => void
+  readonly doubleCount: number
+}
+const counterStore = makeAutoObservable<CounterStoreType>({
   count: 2,
   b: 1,
-  increment: () => {
-    counterStore.count += 1
-    counterStore.b += 100
+  increment() {
+    this.count += 1
+    this.b += 100
   },
 
-  decrement: () => {
-    counterStore.count -= 1
-    counterStore.b -= 50
+  decrement() {
+    this.count -= 1
+    this.b -= 50
   },
 
   get doubleCount() {
-    return counterStore.count * 2
+    return this.count * 2
   },
 })
 

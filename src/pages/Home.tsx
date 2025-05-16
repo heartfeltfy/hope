@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { observer } from 'mobx-react-lite'
-import { useStores } from '@/stores'
 
 const inspirationalText = [
   '愿我在未来的日子里，',
@@ -21,9 +20,6 @@ const getAnimationClass = (isVisible: boolean, delay: number) =>
 
 const Home = observer(() => {
   const [isVisible, setIsVisible] = useState(false)
-  const { counterStore } = useStores()
-  const { increment, count } = counterStore
-  console.log(increment, count)
 
   useEffect(() => {
     // 页面加载后添加动画效果
@@ -34,7 +30,13 @@ const Home = observer(() => {
   const renderedText = useMemo(
     () =>
       inspirationalText.map((line, index) => (
-        <p key={index} className={getAnimationClass(isVisible, (index + 1) * 200)}>
+        <p
+          key={index}
+          className={twMerge(
+            getAnimationClass(isVisible, (index + 1) * 200),
+            'text-slate-700 dark:text-slate-200'
+          )}
+        >
           {line}
         </p>
       )),
@@ -42,14 +44,14 @@ const Home = observer(() => {
   )
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-slate-50 to-blue-100 text-slate-700 font-sans p-4">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-slate-50 to-blue-100 dark:from-zinc-900 dark:to-zinc-800 text-slate-700 dark:text-slate-200 font-sans p-4 transition-colors duration-300">
       <div
         className={twMerge(
           'transform transition-all duration-1000 ease-out',
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
         )}
       >
-        <h1 className="text-4xl md:text-5xl mb-8 font-bold text-center drop-shadow-lg bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+        <h1 className="text-4xl md:text-5xl mb-8 font-bold text-center drop-shadow-lg bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-zinc-200 dark:to-zinc-400">
           愿我所有的努力都不被辜负
         </h1>
 

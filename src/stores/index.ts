@@ -1,5 +1,6 @@
 import counterStore from './CounterStore'
 import authStore from './AuthStore'
+import themeStore from './ThemeStore'
 import { useContext } from 'react'
 import { MobXProviderContext } from 'mobx-react'
 
@@ -7,6 +8,7 @@ import { MobXProviderContext } from 'mobx-react'
 export const stores = {
   counterStore,
   authStore,
+  themeStore,
 }
 
 // 为了 TypeScript 类型支持
