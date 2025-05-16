@@ -7,7 +7,6 @@ function Footer() {
     const timer = setInterval(() => {
       setCurrentTime(new Date())
     }, 1000)
-
     return () => clearInterval(timer)
   }, [])
 
@@ -24,10 +23,10 @@ function Footer() {
   }
 
   return (
-    <footer className="py-6 text-center bg-white">
+    <footer className="py-6 text-center bg-white dark:bg-zinc-900 transition-colors duration-300">
       <div className="container mx-auto">
-        <p className="text-gray-600 mb-2">每一个今天都是成就明天的起点</p>
-        <p className="text-sm text-gray-500">
+        <p className="text-gray-600 dark:text-gray-300 mb-2">每一个今天都是成就明天的起点</p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
           © {formatDateTime(currentTime)} 让我们一起创造美好未来
         </p>
       </div>
