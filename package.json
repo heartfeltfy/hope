@@ -5,7 +5,7 @@
   "type": "module",
   "homepage": "https://heartfeltfy.github.io/hope/",
   "scripts": {
-    "dev": "vite --open --port 5173",
+    "dev": "vite --host --open --port 5173",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "predeploy": "npm run build",
