@@ -27,7 +27,7 @@ const counterStore = makeAutoObservable<CounterStoreType>({
 })
 
 // 配置持久化
-makePersistable(counterStore, {
+void makePersistable(counterStore, {
   name: 'CounterStore',
   properties: ['count'],
   storage: window.localStorage,

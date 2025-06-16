@@ -1,10 +1,11 @@
 import GithubIcon from './GithubIcon'
 import { cn } from '@/utils/cn'
-import { useState, useEffect, useCallback, memo } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import DesktopNav from './DesktopNav'
 import MobileNav from './MobileNav'
 import MenuButton from './MenuButton'
 import Logo from './Logo'
+import ThemeSelect from '@/layout/components/ThemeSelect'
 
 // 提取导航链接为常量
 const NAV_LINKS = [
@@ -13,7 +14,7 @@ const NAV_LINKS = [
   { name: 'Posts', path: '/posts' },
 ]
 
-function Header() {
+const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
 
@@ -77,15 +78,17 @@ function Header() {
         aria-label="Main navigation"
       >
         <Logo />
-        <DesktopNav navList={NAV_LINKS} />
-        <div className="flex sm:hidden items-center space-x-1">
-          <GithubIcon />
-          <MenuButton isOpen={isMenuOpen} onClick={toggleMenu} />
+        <div className={'flex'}>
+          <DesktopNav navList={NAV_LINKS} />
+          <ThemeSelect />
+          <div className="flex sm:hidden items-center space-x-1">
+            <GithubIcon />
+            <MenuButton isOpen={isMenuOpen} onClick={toggleMenu} />
+          </div>
         </div>
       </nav>
       <MobileNav isOpen={isMenuOpen} navList={NAV_LINKS} />
     </header>
   )
 }
-
-export default memo(Header)
+export default Header

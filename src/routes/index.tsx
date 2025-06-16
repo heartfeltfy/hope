@@ -34,6 +34,10 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/synopsis',
+    element: <div>简介</div>,
+  },
 ]
 
 // 创建路由实例
