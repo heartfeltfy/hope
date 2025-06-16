@@ -40,7 +40,7 @@ const themeStore = makeAutoObservable({
   },
 })
 
-void makePersistable(themeStore, {
+makePersistable(themeStore, {
   name: 'themeStore',
   properties: ['theme', 'systemTheme'],
   storage: window.localStorage,
