@@ -35,8 +35,8 @@ const routes = [
     ],
   },
   {
-    path: '/synopsis',
-    element: <div>简介</div>,
+    path: '/chat',
+    element: <div>chat</div>,
   },
 ]
 

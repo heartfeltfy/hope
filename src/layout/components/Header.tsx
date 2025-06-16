@@ -5,7 +5,7 @@ import DesktopNav from './DesktopNav'
 import MobileNav from './MobileNav'
 import MenuButton from './MenuButton'
 import Logo from './Logo'
-import ThemeSelect from '@/layout/components/ThemeSelect'
+import ThemeSwitch from '@/layout/components/ThemeSwitch.tsx'
 
 // 提取导航链接为常量
 const NAV_LINKS = [
@@ -80,7 +80,7 @@ const Header = () => {
         <Logo />
         <div className={'flex'}>
           <DesktopNav navList={NAV_LINKS} />
-          <ThemeSelect />
+          <ThemeSwitch />
           <div className="flex sm:hidden items-center space-x-1">
             <GithubIcon />
             <MenuButton isOpen={isMenuOpen} onClick={toggleMenu} />

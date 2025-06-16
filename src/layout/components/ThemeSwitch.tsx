@@ -9,7 +9,7 @@ import { useStores } from '@/stores'
 import type { Theme } from '@/stores/ThemeStore'
 import { observer } from 'mobx-react-lite'
 
-const ThemeSelect = observer(() => {
+const ThemeSwitch = observer(() => {
   const { themeStore } = useStores()
   const options = [
     { value: 'light', label: '浅色', icon: <Sun className="w-4 h-4" /> },
@@ -49,4 +49,4 @@ const ThemeSelect = observer(() => {
     </DropdownMenu>
   )
 })
-export default ThemeSelect
+export default ThemeSwitch
