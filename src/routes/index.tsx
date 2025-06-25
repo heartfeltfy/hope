@@ -9,6 +9,7 @@ const Home = lazy(() => import('@/pages/Home'))
 const About = lazy(() => import('@/pages/About'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
 const Posts = lazy(() => import('@/pages/Posts'))
+const Chat = lazy(() => import('@/pages/Chat'))
 
 // 路由配置
 const routes = [
@@ -36,7 +37,7 @@ const routes = [
   },
   {
     path: '/chat',
-    element: <div>chat</div>,
+    element: <LazyLoad element={<Chat />} />,
   },
 ]
 

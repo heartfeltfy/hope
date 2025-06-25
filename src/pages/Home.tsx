@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { observer } from 'mobx-react-lite'
-import { toast } from 'sonner'
 
 const inspirationalText = [
   '愿我在未来的日子里，',
@@ -24,7 +23,6 @@ const Home = observer(() => {
 
   useEffect(() => {
     // 页面加载后添加动画效果
-    toast.info('欢迎您的到来！', { position: 'top-right' })
     setIsVisible(true)
   }, [])
 
