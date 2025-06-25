@@ -22,28 +22,17 @@ interface AuthState {
   isLoggedIn: boolean
   loading: boolean
   error: string | null
-
   // 方法
   setUserInfo(userInfo: UserInfo | null): void
-
   setLoading(loading: boolean): void
-
   setError(error: AuthError | string | null): void
-
   login(username: string, password: string): Promise<void>
-
   logout(): void
-
   checkAuth(): boolean
-
   getUserInfo(): UserInfo | null
-
   getToken(): string | undefined
-
   checkTokenExpiration(): boolean
-
   startAutoLogoutTimer(timeout?: number): void
-
   reset(): void
 }
 
