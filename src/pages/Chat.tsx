@@ -27,7 +27,7 @@ const Chat = () => {
         body: JSON.stringify({ refresh_token }),
       })
       const data = await res.json()
-      console.log(data)
+      localStorage.setItem('refresh_token', data.refresh_token)
     } catch (error) {
       console.error(error)
     }
