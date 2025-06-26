@@ -1,5 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import { makePersistable } from 'mobx-persist-store'
+import axiosInstance from '@/utils/axios'
+import { loginApi, refreshApi, logoutApi } from '@/api/auth'
 
 // 定义错误类型
 interface AuthError {
@@ -8,11 +10,9 @@ interface AuthError {
 }
 
 interface UserInfo {
-  id: string
   username: string
-  email: string
-  avatar?: string
-  token: string
+  access_token: string
+  refresh_token: string
 }
 
 // 定义状态类型
@@ -27,11 +27,10 @@ interface AuthState {
   setLoading(loading: boolean): void
   setError(error: AuthError | string | null): void
   login(username: string, password: string): Promise<void>
+  refresh(): Promise<void>
   logout(): void
-  checkAuth(): boolean
   getUserInfo(): UserInfo | null
   getToken(): string | undefined
-  checkTokenExpiration(): boolean
   startAutoLogoutTimer(timeout?: number): void
   reset(): void
 }
@@ -89,29 +88,14 @@ const authStore: AuthState = makeAutoObservable<AuthState>({
         throw new Error('用户名和密码不能为空')
       }
 
-      // 添加请求超时处理
-      const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 10000)
+      const { data } = await axiosInstance.request(loginApi({ username, password }))
 
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-        signal: controller.signal,
-      })
-
-      clearTimeout(timeoutId)
-
-      if (!response.ok) {
-        const errorData = await response.json()
-        // 此处提示错误信息
-        throw new Error(errorData.message || '登录失败')
+      if (!data || !data.access_token) {
+        // 此处可以提示错误信息
+        throw new Error('登录失败，未获取到有效的 token')
       }
 
-      const userInfo = await response.json()
-      this.setUserInfo(userInfo)
+      this.setUserInfo(data)
     } catch (error) {
       if (error instanceof Error) {
         this.setError(error.message)
@@ -124,16 +108,48 @@ const authStore: AuthState = makeAutoObservable<AuthState>({
       this.setLoading(false)
     }
   },
+  // 刷新 token
+  async refresh() {
+    try {
+      this.setLoading(true)
+      this.setError(null)
 
-  // 登出
-  logout() {
-    this.reset()
+      if (!this.userInfo || !this.userInfo.refresh_token) {
+        throw new Error('刷新令牌不能为空')
+      }
+
+      const { data } = await axiosInstance.request(refreshApi(this.userInfo.refresh_token))
+
+      if (!data || !data.access_token) {
+        throw new Error('刷新失败，未获取到有效的 token')
+      }
+
+      this.setUserInfo(data)
+    } catch (error) {
+      if (error instanceof Error) {
+        this.setError(error.message)
+      } else {
+        this.setError('刷新失败')
+      }
+      // 此处可以提示错误信息
+      throw error
+    } finally {
+      this.setLoading(false)
+    }
   },
+  // 登出
+  async logout() {
+    try {
+      this.setLoading(true)
+      this.setError(null)
 
-  // 检查登录状态
-  checkAuth() {
-    if (!this.isLoggedIn) return false
-    return this.checkTokenExpiration()
+      // 调用登出 API
+      const { data } = await axiosInstance.request(logoutApi())
+      console.log(data)
+      this.reset()
+    } catch (error) {
+      console.error('登出时发生错误:', error)
+    }
   },
 
   // 获取用户信息
@@ -143,20 +159,7 @@ const authStore: AuthState = makeAutoObservable<AuthState>({
 
   // 获取 token
   getToken() {
-    return this.userInfo?.token
-  },
-
-  // 检查 token 是否过期
-  checkTokenExpiration() {
-    const token = this.getToken()
-    if (!token) return false
-
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]))
-      return payload.exp * 1000 > Date.now()
-    } catch {
-      return false
-    }
+    return this.userInfo?.access_token
   },
 
   // 启动自动登出定时器
