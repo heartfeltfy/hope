@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from 'mobx'
 import { makePersistable } from 'mobx-persist-store'
 
-type Theme = 'light' | 'dark' | 'system'
+export type Theme = 'light' | 'dark' | 'system'
 
 const themeStore = makeAutoObservable({
   theme: 'system' as Theme,
@@ -44,8 +44,8 @@ makePersistable(themeStore, {
   name: 'themeStore',
   properties: ['theme', 'systemTheme'],
   storage: window.localStorage,
+}).then(() => {
+  themeStore.detectSystemTheme()
 })
-
-themeStore.detectSystemTheme()
 
 export default themeStore

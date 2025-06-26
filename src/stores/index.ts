@@ -1,4 +1,3 @@
-import counterStore from './CounterStore'
 import authStore from './AuthStore'
 import themeStore from './ThemeStore'
 import { useContext } from 'react'
@@ -6,7 +5,6 @@ import { MobXProviderContext } from 'mobx-react'
 
 // 导出所有 store
 export const stores = {
-  counterStore,
   authStore,
   themeStore,
 }
