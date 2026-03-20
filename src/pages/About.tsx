@@ -9,7 +9,7 @@ const About = () => {
   }, [])
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 to-blue-100 dark:from-zinc-900 dark:to-zinc-800 p-4 transition-colors duration-300">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-indigo-50 to-blue-100 dark:from-zinc-900 dark:to-zinc-800 p-4 transition-colors duration-300">
       <div
         className={twMerge(
           'p-8 max-w-2xl mx-auto bg-white dark:bg-zinc-900 rounded-xl shadow-lg transform transition-all duration-700 ease-in-out',
@@ -20,7 +20,7 @@ const About = () => {
       >
         <h1
           className={twMerge(
-            'text-3xl font-bold text-indigo-700 dark:text-zinc-100 mb-6 text-center transition-all duration-500',
+            'text-3xl md:text-4xl font-bold text-indigo-700 dark:text-zinc-100 mb-8 text-center transition-all duration-500',
             'relative',
             isVisible ? 'opacity-100' : 'opacity-0'
           )}
@@ -36,10 +36,10 @@ const About = () => {
           </span>
         </h1>
 
-        <div className="space-y-6 text-gray-700 dark:text-gray-200 leading-relaxed">
+        <div className="space-y-6 text-gray-700 dark:text-gray-200 leading-relaxed font-['Noto_Sans_SC']">
           <p
             className={twMerge(
-              'text-xl mb-4 transition-all duration-700 delay-200',
+              'text-xl mb-4 transition-all duration-700 delay-200 font-medium tracking-wide',
               isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
             )}
           >
@@ -48,7 +48,7 @@ const About = () => {
 
           <p
             className={twMerge(
-              'text-gray-600 dark:text-gray-400 mb-6 transition-all duration-700 delay-300',
+              'text-gray-600 dark:text-gray-400 mb-6 transition-all duration-700 delay-300 leading-relaxed tracking-wide',
               isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
             )}
           >
@@ -59,7 +59,7 @@ const About = () => {
 
           <p
             className={twMerge(
-              'font-medium text-gray-800 dark:text-gray-100 text-center text-lg transition-all duration-700 delay-400',
+              'font-medium text-gray-800 dark:text-gray-100 text-center text-lg transition-all duration-700 delay-400 tracking-wide',
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             )}
           >

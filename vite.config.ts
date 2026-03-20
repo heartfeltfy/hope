@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 import fs from 'fs'
+import { visualizer } from 'rollup-plugin-visualizer'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -10,6 +11,12 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    visualizer({
+      filename: './dist/stats.html',
+      open: false,
+      gzipSize: true,
+      brotliSize: true,
+    }),
     {
       name: 'copy-404',
       closeBundle() {
@@ -31,15 +38,35 @@ export default defineConfig({
     port: 5173,
     host: '0.0.0.0',
     cors: true,
-    proxy:{
+    proxy: {
       '/api': {
         target: 'http://localhost:3000/api',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      }
-    }
+        rewrite: path => path.replace(/^\/api/, ''),
+      },
+    },
   },
   build: {
     outDir: 'dist',
+    target: 'es2017',
+    cssCodeSplit: true,
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            // if (id.includes('react')) return 'vendor-react'
+            if (id.includes('axios')) return 'vendor-axios'
+            if (id.includes('mobx')) return 'mobx'
+            if (id.includes('lucide-react')) return 'vendor-lucide'
+            return 'vendor'
+          }
+        },
+        entryFileNames: 'assets/[name].[hash].js',
+        chunkFileNames: 'assets/[name].[hash].js',
+        assetFileNames: 'assets/[name].[hash].[ext]',
+      },
+    },
+    minify: 'esbuild',
   },
 })

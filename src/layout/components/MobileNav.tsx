@@ -16,8 +16,8 @@ const MobileNav = ({ isOpen, navList }: MobileNavProps) => {
       className={cn(
         'sm:hidden',
         'absolute left-0 right-0',
-        'w-full bg-gradient-to-b from-blue-50/95 to-white/95 backdrop-blur-sm',
-        'dark:bg-gradient-to-b dark:from-zinc-900/95 dark:to-zinc-800/95 dark:backdrop-blur-sm',
+        'w-full bg-linear-to-b from-blue-50/95 to-white/95 backdrop-blur-sm',
+        'dark:bg-linear-to-b dark:from-zinc-900/95 dark:to-zinc-800/95 dark:backdrop-blur-sm',
         'border-t border-slate-200/70 dark:border-zinc-700/70',
         'shadow-lg',
         'transition-all duration-300 ease-in-out',
