@@ -64,8 +64,8 @@ const Header = () => {
       className={cn(
         'sticky top-0 left-0 right-0 w-full z-50 transition-all duration-300 border-b',
         isScrolled
-          ? 'bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 shadow-md backdrop-blur-sm dark:bg-gradient-to-r dark:from-zinc-900 dark:via-zinc-800 dark:to-zinc-900 dark:shadow-lg border-b border-slate-200/80 dark:border-zinc-700/80'
-          : 'bg-gradient-to-r from-white via-slate-50 to-white dark:bg-gradient-to-r dark:from-zinc-900 dark:via-zinc-800 dark:to-zinc-900 border-b border-slate-200/80 dark:border-zinc-700/80'
+          ? 'bg-linear-to-r from-blue-50 via-indigo-50 to-purple-50 shadow-md backdrop-blur-sm dark:bg-linear-to-r dark:from-zinc-900 dark:via-zinc-800 dark:to-zinc-900 dark:shadow-lg border-b border-slate-200/80 dark:border-zinc-700/80'
+          : 'bg-linear-to-r from-white via-slate-50 to-white dark:bg-linear-to-r dark:from-zinc-900 dark:via-zinc-800 dark:to-zinc-900 border-b border-slate-200/80 dark:border-zinc-700/80'
       )}
     >
       <nav
