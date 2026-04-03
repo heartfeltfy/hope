@@ -1,10 +1,13 @@
-const Posts: React.FC = () => {
+const Blog: React.FC = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-50 to-blue-100 dark:from-zinc-900 dark:to-zinc-800 p-4 transition-colors duration-300">
       <div className="w-full max-w-2xl mx-auto p-6 sm:p-10 rounded-xl shadow-lg bg-white dark:bg-zinc-900 transition-all duration-300">
-        <h1 className="text-3xl sm:text-4xl font-bold text-center mb-10 text-indigo-700 dark:text-zinc-100 drop-shadow title-animation transition-all duration-300">
-          勇往直前，追逐梦想
+        <h1 className="text-3xl sm:text-4xl font-bold text-center mb-4 text-indigo-700 dark:text-zinc-100 drop-shadow title-animation transition-all duration-300">
+          博客
         </h1>
+        <p className="text-center text-sm text-slate-500 dark:text-slate-400 mb-10">
+          技术分享与写作（分类、标签、图片等功能规划中）
+        </p>
 
         <div className="content-card p-6 sm:p-8 mb-8 rounded-lg shadow bg-white dark:bg-zinc-800 transition-all duration-300">
           <p className="mb-6 text-base sm:text-lg leading-relaxed text-gray-700 dark:text-gray-200 transition-colors duration-300 tracking-wide">
@@ -42,7 +45,7 @@ const Posts: React.FC = () => {
           </div>
 
           <div className="quote mt-10 text-right italic text-lg text-gray-500 dark:text-gray-400 border-t border-slate-200 dark:border-zinc-700 pt-6 transition-all duration-300">
-            "青春由磨砺而出彩，人生因奋斗而升华。"
+            &quot;青春由磨砺而出彩，人生因奋斗而升华。&quot;
           </div>
         </div>
       </div>
@@ -87,4 +90,4 @@ const Posts: React.FC = () => {
   )
 }
 
-export default Posts
+export default Blog

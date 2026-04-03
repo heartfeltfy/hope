@@ -9,9 +9,10 @@ import ThemeSwitch from '@/layout/components/ThemeSwitch.tsx'
 
 // 提取导航链接为常量
 const NAV_LINKS = [
-  { name: 'Home', path: '/' },
-  { name: 'About', path: '/about' },
-  { name: 'Posts', path: '/posts' },
+  { name: '首页', path: '/' },
+  { name: '博客', path: '/blog' },
+  { name: '生活记录', path: '/life' },
+  { name: 'AI 智能问答', path: '/ai' },
 ]
 
 const Header = () => {

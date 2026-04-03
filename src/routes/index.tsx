@@ -1,17 +1,15 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { lazy } from 'react'
 
 import Layout from '@/layout'
 import LazyLoad from '@/components/LazyLoad'
 
-// 懒加载页面组件
 const Home = lazy(() => import('@/pages/Home'))
-const About = lazy(() => import('@/pages/About'))
+const Blog = lazy(() => import('@/pages/Blog'))
+const Life = lazy(() => import('@/pages/Life'))
+const AiChat = lazy(() => import('@/pages/AiChat'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
-const Posts = lazy(() => import('@/pages/Posts'))
-const Chat = lazy(() => import('@/pages/Chat'))
 
-// 路由配置
 const routes = [
   {
     path: '/',
@@ -22,26 +20,28 @@ const routes = [
         element: <LazyLoad element={<Home />} />,
       },
       {
-        path: 'about',
-        element: <LazyLoad element={<About />} />,
+        path: 'blog',
+        element: <LazyLoad element={<Blog />} />,
       },
       {
-        path: 'posts',
-        element: <LazyLoad element={<Posts />} />,
+        path: 'life',
+        element: <LazyLoad element={<Life />} />,
       },
+      {
+        path: 'ai',
+        element: <LazyLoad element={<AiChat />} />,
+      },
+      { path: 'about', element: <Navigate to="/life" replace /> },
+      { path: 'posts', element: <Navigate to="/blog" replace /> },
       {
         path: '*',
         element: <LazyLoad element={<NotFound />} />,
       },
     ],
   },
-  {
-    path: '/chat',
-    element: <LazyLoad element={<Chat />} />,
-  },
+  { path: '/chat', element: <Navigate to="/ai" replace /> },
 ]
 
-// 创建路由实例
 const router = createBrowserRouter(routes, {
   basename: process.env.NODE_ENV === 'production' ? '/hope' : '/',
 })

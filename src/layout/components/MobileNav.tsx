@@ -46,7 +46,7 @@ const MobileNav = ({ isOpen, navList }: MobileNavProps) => {
               to={item.path}
               className={cn(
                 'py-4 px-8',
-                'text-sm uppercase tracking-wide',
+                'text-sm tracking-wide',
                 'cursor-pointer',
                 'hover:bg-indigo-50/50 hover:text-indigo-600',
                 'dark:hover:bg-zinc-800/60 dark:hover:text-indigo-400',

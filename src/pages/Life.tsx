@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-const About = () => {
+const Life = () => {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
@@ -20,13 +20,13 @@ const About = () => {
       >
         <h1
           className={twMerge(
-            'text-3xl md:text-4xl font-bold text-indigo-700 dark:text-zinc-100 mb-8 text-center transition-all duration-500',
+            'text-3xl md:text-4xl font-bold text-indigo-700 dark:text-zinc-100 mb-2 text-center transition-all duration-500',
             'relative',
             isVisible ? 'opacity-100' : 'opacity-0'
           )}
         >
           <span className="relative inline-block">
-            关于我们
+            生活记录
             <span
               className={twMerge(
                 'absolute -bottom-2 left-0 w-full h-1 bg-indigo-400 dark:bg-zinc-600 rounded transform transition-all duration-700 delay-500',
@@ -35,6 +35,9 @@ const About = () => {
             ></span>
           </span>
         </h1>
+        <p className="text-center text-sm text-slate-500 dark:text-slate-400 mb-8">
+          日常随笔、照片墙与时间轴（规划中）
+        </p>
 
         <div className="space-y-6 text-gray-700 dark:text-gray-200 leading-relaxed font-['Noto_Sans_SC']">
           <p
@@ -82,4 +85,4 @@ const About = () => {
   )
 }
 
-export default About
+export default Life
