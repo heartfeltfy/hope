@@ -5,7 +5,8 @@ import Layout from '@/layout'
 import LazyLoad from '@/components/LazyLoad'
 
 const Home = lazy(() => import('@/pages/Home'))
-const Blog = lazy(() => import('@/pages/Blog'))
+const Blog = lazy(() => import('@/pages/blog'))
+const PostDetail = lazy(() => import('@/pages/blog/PostDetail'))
 const Life = lazy(() => import('@/pages/Life'))
 const AiChat = lazy(() => import('@/pages/AiChat'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
@@ -22,6 +23,10 @@ const routes = [
       {
         path: 'blog',
         element: <LazyLoad element={<Blog />} />,
+      },
+      {
+        path: 'blog/:slug',
+        element: <LazyLoad element={<PostDetail />} />,
       },
       {
         path: 'life',
