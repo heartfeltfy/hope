@@ -7,7 +7,6 @@ import MenuButton from './MenuButton'
 import Logo from './Logo'
 import ThemeSwitch from '@/layout/components/ThemeSwitch.tsx'
 
-// 提取导航链接为常量
 const NAV_LINKS = [
   { name: '首页', path: '/' },
   { name: '博客', path: '/blog' },
@@ -19,40 +18,50 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
 
-  // 使用useCallback优化事件处理函数
   const toggleMenu = useCallback(() => {
     setIsMenuOpen(prev => !prev)
   }, [])
 
-  // 窗口大小变化监听
+  const closeMenu = useCallback(() => {
+    setIsMenuOpen(false)
+  }, [])
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
+      document.body.style.overflow = 'hidden'
+      document.body.style.paddingRight = `${scrollbarWidth}px`
+    } else {
+      document.body.style.overflow = ''
+      document.body.style.paddingRight = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+      document.body.style.paddingRight = ''
+    }
+  }, [isMenuOpen])
+
   useEffect(() => {
     const handleResize = () => {
-      // 当窗口宽度大于 lg 断点 (1024px) 时关闭菜单
       if (window.innerWidth >= 1024) {
         setIsMenuOpen(false)
       }
     }
 
     window.addEventListener('resize', handleResize)
-
-    // 初始检查
     handleResize()
 
-    // 清理监听器
     return () => {
       window.removeEventListener('resize', handleResize)
     }
   }, [])
 
-  // 添加滚动监听，用于改变导航栏样式
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10)
     }
 
     window.addEventListener('scroll', handleScroll)
-
-    // 初始检查
     handleScroll()
 
     return () => {
@@ -88,7 +97,7 @@ const Header = () => {
           </div>
         </div>
       </nav>
-      <MobileNav isOpen={isMenuOpen} navList={NAV_LINKS} />
+      <MobileNav isOpen={isMenuOpen} navList={NAV_LINKS} onNavClick={closeMenu} />
     </header>
   )
 }

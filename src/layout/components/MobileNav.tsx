@@ -8,9 +8,10 @@ interface NavItem {
 interface MobileNavProps {
   isOpen: boolean
   navList: NavItem[]
+  onNavClick?: () => void
 }
 
-const MobileNav = ({ isOpen, navList }: MobileNavProps) => {
+const MobileNav = ({ isOpen, navList, onNavClick }: MobileNavProps) => {
   return (
     <div
       className={cn(
@@ -24,11 +25,8 @@ const MobileNav = ({ isOpen, navList }: MobileNavProps) => {
         'z-40',
         'top-full',
         isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2',
-        !isOpen && 'invisible'
+        !isOpen && 'invisible pointer-events-none'
       )}
-      style={{
-        transformOrigin: 'top',
-      }}
     >
       <ul
         className={cn(
@@ -37,13 +35,14 @@ const MobileNav = ({ isOpen, navList }: MobileNavProps) => {
           'text-slate-600 dark:text-slate-200',
           'max-w-7xl mx-auto',
           'max-h-[calc(100vh-100%)]',
-          'overflow-y-auto'
+          'overflow-y-auto overscroll-contain'
         )}
       >
         {navList.map(item => (
           <li key={item.path}>
             <Link
               to={item.path}
+              onClick={onNavClick}
               className={cn(
                 'py-4 px-8',
                 'text-sm tracking-wide',
