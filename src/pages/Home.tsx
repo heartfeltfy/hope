@@ -295,14 +295,6 @@ const Home = observer(() => {
             </div>
           </div>
         </section>
-
-        <footer
-          className={cn('pb-8 pt-4 text-center', 'border-t border-slate-100 dark:border-zinc-800')}
-        >
-          <p className="text-xs text-slate-400 dark:text-slate-500">
-            © {new Date().getFullYear()} Hope · 愿每一份努力都不被辜负
-          </p>
-        </footer>
       </div>
     </div>
   )

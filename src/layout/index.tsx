@@ -5,10 +5,10 @@ import ScrollToTop from './components/ScrollToTop'
 
 const Layout = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="h-screen flex flex-col overflow-hidden">
       <ScrollToTop />
       <Header />
-      <main className="flex-1">
+      <main className="flex-1 overflow-y-auto">
         <Outlet />
       </main>
       <Footer />

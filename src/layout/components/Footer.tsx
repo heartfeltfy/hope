@@ -1,33 +1,20 @@
-import { useState, useEffect } from 'react'
+import { cn } from '@/utils/cn'
+import { Heart } from 'lucide-react'
 
 function Footer() {
-  const [currentTime, setCurrentTime] = useState(new Date())
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date())
-    }, 1000)
-    return () => clearInterval(timer)
-  }, [])
-
-  const formatDateTime = (date: Date) => {
-    return date.toLocaleString('zh-CN', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: false,
-    })
-  }
-
   return (
-    <footer className="py-6 text-center bg-white dark:bg-zinc-900 transition-colors duration-300">
-      <div className="container mx-auto">
-        <p className="text-gray-600 dark:text-gray-300 mb-2">每一个今天都是成就明天的起点</p>
-        <p className="text-sm text-gray-500 dark:text-gray-400">
-          © {formatDateTime(currentTime)} 让我们一起创造美好未来
+    <footer
+      className={cn(
+        'py-2 text-center',
+        'bg-white dark:bg-zinc-900',
+        'border-t border-slate-100 dark:border-zinc-800',
+        'transition-colors duration-300'
+      )}
+    >
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <p className="text-xs text-slate-400 dark:text-slate-500 inline-flex items-center gap-1">
+          © {new Date().getFullYear()} Hope · 愿每一份努力都不被辜负
+          <Heart className="size-3 text-rose-400" />
         </p>
       </div>
     </footer>
