@@ -1,10 +1,12 @@
-import { useEffect, useState, useMemo, useCallback } from 'react'
+import { useEffect, useState, useMemo, useCallback, useRef } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
 import { useStores } from '@/stores'
 import { cn } from '@/utils/cn'
 import PostMeta from './components/PostMeta'
 import TableOfContents from './components/TableOfContents'
+import ImageLightbox from './components/ImageLightbox'
+import PostNavigation from './components/PostNavigation'
 import type { TocItem } from '@/types/blog'
 import { ArrowLeft, Tag } from 'lucide-react'
 
@@ -12,8 +14,17 @@ const PostDetail = observer(() => {
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
   const { blogStore } = useStores()
-  const { currentPost, loading, relatedPosts } = blogStore
+  const { currentPost, loading, relatedPosts, prevPost, nextPost } = blogStore
   const [activeTocId, setActiveTocId] = useState<string>('')
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [lightboxIndex, setLightboxIndex] = useState(0)
+  const contentImagesRef = useRef<{ src: string; alt?: string }[]>([])
+
+  useEffect(() => {
+    if (blogStore.posts.length === 0) {
+      blogStore.fetchPosts()
+    }
+  }, [blogStore])
 
   useEffect(() => {
     if (slug) {
@@ -66,6 +77,16 @@ const PostDetail = observer(() => {
     }
   }, [])
 
+  const handleImageClick = useCallback((src: string, _alt?: string) => {
+    const idx = contentImagesRef.current.findIndex(img => img.src === src)
+    if (idx >= 0) {
+      setLightboxIndex(idx)
+    } else {
+      setLightboxIndex(0)
+    }
+    setLightboxOpen(true)
+  }, [])
+
   if (loading) {
     return (
       <div
@@ -111,6 +132,25 @@ const PostDetail = observer(() => {
       </div>
     )
   }
+
+  const collectImages = (): { src: string; alt?: string }[] => {
+    const images: { src: string; alt?: string }[] = []
+    if (currentPost.coverImage) {
+      images.push({
+        src: currentPost.coverImage.url,
+        alt: currentPost.coverImage.alt || currentPost.title,
+      })
+    }
+    const imgRegex = /!\[([^\]]*)\]\(([^)]+)\)/g
+    let imgMatch
+    while ((imgMatch = imgRegex.exec(currentPost.content)) !== null) {
+      images.push({ src: imgMatch[2], alt: imgMatch[1] })
+    }
+    return images
+  }
+
+  const allImages = collectImages()
+  contentImagesRef.current = allImages
 
   const renderContent = (content: string) => {
     const lines = content.split('\n')
@@ -168,6 +208,31 @@ const PostDetail = observer(() => {
 
       if (inCodeBlock) {
         codeContent += line + '\n'
+        continue
+      }
+
+      const imgMatch = line.match(/^!\[([^\]]*)\]\(([^)]+)\)$/)
+      if (imgMatch) {
+        const alt = imgMatch[1]
+        const src = imgMatch[2]
+        elements.push(
+          <div key={`img-${i}`} className="my-6">
+            <img
+              src={src}
+              alt={alt}
+              className={cn(
+                'max-w-full rounded-lg cursor-zoom-in',
+                'hover:shadow-lg hover:brightness-95',
+                'transition-all duration-200'
+              )}
+              loading="lazy"
+              onClick={() => handleImageClick(src, alt)}
+            />
+            {alt && (
+              <p className="mt-2 text-center text-xs text-slate-400 dark:text-slate-500">{alt}</p>
+            )}
+          </div>
+        )
         continue
       }
 
@@ -299,7 +364,17 @@ const PostDetail = observer(() => {
                   <img
                     src={currentPost.coverImage.url}
                     alt={currentPost.coverImage.alt || currentPost.title}
-                    className="w-full h-64 sm:h-80 object-cover"
+                    className={cn(
+                      'w-full h-64 sm:h-80 object-cover',
+                      'cursor-zoom-in hover:brightness-95',
+                      'transition-all duration-200'
+                    )}
+                    onClick={() =>
+                      handleImageClick(
+                        currentPost.coverImage!.url,
+                        currentPost.coverImage!.alt || currentPost.title
+                      )
+                    }
                   />
                 </div>
               )}
@@ -343,6 +418,8 @@ const PostDetail = observer(() => {
 
               <div className="prose-custom">{renderContent(currentPost.content)}</div>
             </div>
+
+            <PostNavigation prevPost={prevPost} nextPost={nextPost} />
 
             {relatedPosts.length > 0 && (
               <div className="mt-8">
@@ -407,6 +484,13 @@ const PostDetail = observer(() => {
           )}
         </div>
       </div>
+
+      <ImageLightbox
+        images={allImages}
+        initialIndex={lightboxIndex}
+        open={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+      />
     </div>
   )
 })

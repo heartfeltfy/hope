@@ -1,6 +1,7 @@
 import authStore from './AuthStore'
 import themeStore from './ThemeStore'
 import blogStore from './BlogStore'
+import lifeStore from './LifeStore'
 import { useContext } from 'react'
 import { MobXProviderContext } from 'mobx-react'
 
@@ -8,6 +9,7 @@ export const stores = {
   authStore,
   themeStore,
   blogStore,
+  lifeStore,
 }
 
 export type StoresType = typeof stores

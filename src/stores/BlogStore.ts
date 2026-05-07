@@ -804,6 +804,18 @@ const blogStore = makeAutoObservable({
       .slice(0, 3)
   },
 
+  get prevPost(): Post | null {
+    if (!this.currentPost) return null
+    const idx = this.posts.findIndex(p => p.id === this.currentPost!.id)
+    return idx > 0 ? this.posts[idx - 1] : null
+  },
+
+  get nextPost(): Post | null {
+    if (!this.currentPost) return null
+    const idx = this.posts.findIndex(p => p.id === this.currentPost!.id)
+    return idx < this.posts.length - 1 ? this.posts[idx + 1] : null
+  },
+
   async fetchPosts() {
     try {
       this.setLoading(true)

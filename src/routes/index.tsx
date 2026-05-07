@@ -7,7 +7,7 @@ import LazyLoad from '@/components/LazyLoad'
 const Home = lazy(() => import('@/pages/Home'))
 const Blog = lazy(() => import('@/pages/blog'))
 const PostDetail = lazy(() => import('@/pages/blog/PostDetail'))
-const Life = lazy(() => import('@/pages/Life'))
+const Life = lazy(() => import('@/pages/life'))
 const AiChat = lazy(() => import('@/pages/AiChat'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
 
